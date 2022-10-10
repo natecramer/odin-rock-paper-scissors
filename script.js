@@ -1,4 +1,16 @@
-console.log('Welcome to my game');
+let outputDiv = document.querySelector('#output');
+
+function output(s, color='') {
+    // outputDiv.textContent += s + '\n';
+    para = document.createElement('p');
+    para.textContent = s;
+    if (color != '')
+        para.style.color = color;
+    outputDiv.appendChild(para);
+}
+
+// output('Welcome to my game');
+// output('My name is timmy');
 
 /**
  * Generates a random choice of 'rock' 'paper' or 'scissors'
@@ -61,41 +73,90 @@ function playRound() {
     playerChoice = playerChoice.toLocaleLowerCase();
     
     computerChoice = getComputerChoice();
-    console.log(`The player chose ${playerChoice}`);
-    console.log(`The computer chose ${computerChoice}`);
+    output(`The player chose ${playerChoice}`);
+    output(`The computer chose ${computerChoice}`);
 
     let winner = evaluate(playerChoice, computerChoice);
-    console.log(`Winner: ${winner}`);
+    output(`Winner: ${winner}`);
     return winner;
 }
 
+/*
 // main game function, this is called once.
-function game() {
+function gamex() {
     let playerScore = 0;
     let computerScore = 0;
 
     // Main game loop
     for (i = 1; i <= 5; i++) {
-        console.log(`Round ${i}/5`)
+        output(`Round ${i}/5`)
         let result = playRound();
         if (result === 'Player') {
             playerScore += 1;
         } else if (result === 'Computer') {
             computerScore += 1;
         }
-        console.log(`Player score: ${playerScore}\nComputer score: ${computerScore}\n`);
+        output(`Player score: ${playerScore}\nComputer score: ${computerScore}\n`);
     }
 
     // Game end
-    console.log('Game over!');
-    console.log(`The final score is ${playerScore} to ${computerScore}`);
+    output('Game over!');
+    output(`The final score is ${playerScore} to ${computerScore}`);
     if (playerScore > computerScore) {
-        console.log(`Player wins!`);
+        output(`Player wins!`);
     } else if (playerScore < computerScore) {
-        console.log(`Computer wins!`);
+        output(`Computer wins!`);
     } else {
-        console.log(`It's a tie!`);
+        output(`It's a tie!`);
     }
 }
+*/
 
-document.querySelector('#playButton').addEventListener('click', game);
+class Game {
+    constructor() {
+        this.round = 1;
+        this.playerScore = 0;
+        this.computerScore = 0;
+    }
+
+    playRound(playerChoice) {
+        output(`The player chose ${playerChoice}`);
+
+        let computerChoice = getComputerChoice();
+        output(`The computer chose ${computerChoice}`);
+
+        let winner = evaluate(playerChoice, computerChoice);
+
+        let color = ''
+        if (winner === 'Player')
+            color = 'green';
+        if (winner === 'Computer')
+            color = 'red';
+        if (winner === 'Draw')
+            color = 'orange';
+
+        output(`Winner: ${winner}`, color);
+        output('---');
+        output(`Round ${++this.round}:`);
+    }
+}
+game = new Game();
+
+function doRock() {
+    game.playRound('rock');
+}
+
+function doPaper() {
+    game.playRound('paper');
+}
+
+function doScissors() {
+    game.playRound('scissors');
+}
+
+// document.querySelector('#playButton').addEventListener('click', game);
+document.querySelector('#rock').addEventListener('click', doRock);
+document.querySelector('#paper').addEventListener('click', doPaper);
+document.querySelector('#scissors').addEventListener('click', doScissors);
+
+output('Round 1:');
