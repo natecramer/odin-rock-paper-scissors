@@ -117,6 +117,7 @@ class Game {
         this.round = 1;
         this.playerScore = 0;
         this.computerScore = 0;
+        this.isPlaying = true;
     }
 
     playRound(playerChoice) {
@@ -128,30 +129,57 @@ class Game {
         let winner = evaluate(playerChoice, computerChoice);
 
         let color = ''
-        if (winner === 'Player')
+        if (winner === 'Player') {
             color = 'green';
-        if (winner === 'Computer')
+            this.playerScore += 1;
+        } else if (winner === 'Computer') {
             color = 'red';
-        if (winner === 'Draw')
+            this.computerScore += 1;
+        } else if (winner === 'Draw') {
             color = 'orange';
+        }
 
         output(`Winner: ${winner}`, color);
         output('---');
         output(`Round ${++this.round}:`);
+
+        if (this.round >= 6) {
+            this.doGameOver();
+        }
+    }
+
+    doGameOver() {
+        // Game end
+        this.isPlaying = false;
+        output('Game over!');
+        output(`The final score is ${this.playerScore} to ${this.computerScore}`);
+        if (this.playerScore > this.computerScore) {
+            output(`Player wins!`, 'green');
+        } else if (this.playerScore < this.computerScore) {
+            output(`Computer wins!`, 'red');
+        } else {
+            output(`It's a tie!`, 'orange');
+        }
     }
 }
 game = new Game();
 
 function doRock() {
-    game.playRound('rock');
+    if (game.isPlaying) {
+        game.playRound('rock');
+    }
 }
 
 function doPaper() {
-    game.playRound('paper');
+    if (game.isPlaying) {
+        game.playRound('paper');
+    }
 }
 
 function doScissors() {
-    game.playRound('scissors');
+    if (game.isPlaying) {
+        game.playRound('scissors');
+    }
 }
 
 // document.querySelector('#playButton').addEventListener('click', game);
