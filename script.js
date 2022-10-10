@@ -1,6 +1,7 @@
 let outputDiv = document.querySelector('#output');
 
 function output(s, color='') {
+    // return;
     // outputDiv.textContent += s + '\n';
     para = document.createElement('p');
     para.textContent = s;
@@ -64,54 +65,6 @@ function evaluate(playerChoice, computerChoice) {
     return 'Computer';
 }
 
-/**
- * 
- * @returns string for who won the round, either 'Player' or 'Computer'
- */
-function playRound() {
-    let playerChoice = String(prompt('rock, paper or scissors?'));
-    playerChoice = playerChoice.toLocaleLowerCase();
-    
-    computerChoice = getComputerChoice();
-    output(`The player chose ${playerChoice}`);
-    output(`The computer chose ${computerChoice}`);
-
-    let winner = evaluate(playerChoice, computerChoice);
-    output(`Winner: ${winner}`);
-    return winner;
-}
-
-/*
-// main game function, this is called once.
-function gamex() {
-    let playerScore = 0;
-    let computerScore = 0;
-
-    // Main game loop
-    for (i = 1; i <= 5; i++) {
-        output(`Round ${i}/5`)
-        let result = playRound();
-        if (result === 'Player') {
-            playerScore += 1;
-        } else if (result === 'Computer') {
-            computerScore += 1;
-        }
-        output(`Player score: ${playerScore}\nComputer score: ${computerScore}\n`);
-    }
-
-    // Game end
-    output('Game over!');
-    output(`The final score is ${playerScore} to ${computerScore}`);
-    if (playerScore > computerScore) {
-        output(`Player wins!`);
-    } else if (playerScore < computerScore) {
-        output(`Computer wins!`);
-    } else {
-        output(`It's a tie!`);
-    }
-}
-*/
-
 class Game {
     constructor() {
         this.round = 1;
@@ -121,10 +74,12 @@ class Game {
     }
 
     playRound(playerChoice) {
-        output(`The player chose ${playerChoice}`);
+        // output(`The player chose ${playerChoice}`);
+        document.querySelector('#youChose').textContent = `You chose: ${playerChoice}`;
 
         let computerChoice = getComputerChoice();
-        output(`The computer chose ${computerChoice}`);
+        // output(`The computer chose ${computerChoice}`);
+        document.querySelector('#computerChose').textContent = `CPU chose: ${computerChoice}`;
 
         let winner = evaluate(playerChoice, computerChoice);
 
@@ -139,12 +94,24 @@ class Game {
             color = 'orange';
         }
 
-        output(`Winner: ${winner}`, color);
-        output('---');
-        output(`Round ${++this.round}:`);
+        document.querySelector('#score').textContent = `${this.playerScore} - ${this.computerScore}`;
+
+        output(`Round ${this.round}: ${winner}`, color);
+        // output('---');
+        // output(`Round ${++this.round}:`);
+        this.round += 1;
+
+        const resultSpan = document.querySelector('#result');
+        resultSpan.textContent = `${winner}!`;
+        resultSpan.style.color = color;
+
+        const roundElem = document.querySelector('#round');
+        roundElem.textContent = `Round ${this.round}`;
+
 
         if (this.round >= 6) {
             this.doGameOver();
+            roundElem.textContent = `Game Over`;
         }
     }
 
@@ -186,5 +153,3 @@ function doScissors() {
 document.querySelector('#rock').addEventListener('click', doRock);
 document.querySelector('#paper').addEventListener('click', doPaper);
 document.querySelector('#scissors').addEventListener('click', doScissors);
-
-output('Round 1:');
