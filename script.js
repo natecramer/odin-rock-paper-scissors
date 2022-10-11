@@ -18,7 +18,7 @@ function output(s, color='') {
  * @returns String 
  */
 function getComputerChoice() {
-    let r = Math.floor(Math.random() * 2);
+    let r = Math.floor(Math.random() * 3);
     if (r === 0) {
         return 'rock';
     } else if (r === 1) {
@@ -32,7 +32,7 @@ function getComputerChoice() {
  * Pass in Player and Computer choices for 'rock' 'paper' or 'scissors', and this will evaluate and tell you who wins.
  * @param {string} playerChoice 'rock' 'paper' 'scissors'
  * @param {string} computerChoice 'rock' 'paper' 'scissors'
- * @returns String for who wins, either 'Player' or 'Computer'
+ * @returns {string} String for who wins, either 'Player' or 'Computer'
  */
 function evaluate(playerChoice, computerChoice) {
     if (playerChoice === computerChoice) {
@@ -40,7 +40,7 @@ function evaluate(playerChoice, computerChoice) {
     }
 
     if (playerChoice === 'rock') {
-        if (computerChoice = 'paper') {
+        if (computerChoice === 'scissors') {
             return 'Player';
         } else {
             return 'Computer';
@@ -48,7 +48,7 @@ function evaluate(playerChoice, computerChoice) {
     }
 
     if (playerChoice === 'paper') {
-        if (computerChoice = 'rock') {
+        if (computerChoice === 'rock') {
             return 'Player';
         } else {
             return 'Computer';
@@ -56,7 +56,7 @@ function evaluate(playerChoice, computerChoice) {
     }
 
     if (playerChoice === 'scissors') {
-        if (computerChoice = 'paper') {
+        if (computerChoice === 'paper') {
             return 'Player';
         } else {
             return 'Computer';
